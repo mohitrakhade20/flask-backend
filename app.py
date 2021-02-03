@@ -1,43 +1,14 @@
-#~movie-bag/app.py
-
-from flask import Flask,jsonify, request
+from flask import Flask
+from database.db import initialize_db
+from resource.movie import movies
 
 app = Flask(__name__)
 
-movies = [
-    {
-        "name": "The Shawshank Redemption",
-        "casts": ["Tim Robbins", "Morgan Freeman", "Bob Gunton", "William Sadler"],
-        "genres": ["Drama"]
-    },
-    {
-       "name": "The Godfather ",
-       "casts": ["Marlon Brando", "Al Pacino", "James Caan", "Diane Keaton"],
-       "genres": ["Crime", "Drama"]
-    }
+app.config['MONGODB_SETTINGS'] = {
+    'host': 'mongodb+srv://mohit2:mohit2@cluster0.aocc5.mongodb.net/rest-flask?retryWrites=true&w=majority'
+}
 
-]
+initialize_db(app)
+app.register_blueprint(movies)
 
-@app.route('/movies')
-def hello():
-    return jsonify(movies)
-
-@app.route('/movies', methods=['POST'])
-def add_movie():
-    movie = request.get_json()
-    movies.append(movie)
-    return {'id': len(movies)-1}, 200
-
-@app.route('/movies/<int:index>', methods=['PUT'])
-def update_movie(index):
-    movie = request.get_json()
-    movies[index] = movie
-    return jsonify(movies[index]), 200
-
-@app.route('/movies/<int:index>', methods=['DELETE'])
-def delete_movie(index):
-    movies.pop(index)
-    return 'None', 200
-
-
-app.run(debug=True)
+app.run()
