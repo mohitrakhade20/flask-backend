@@ -8,6 +8,7 @@ flask = "*"
 wheel = "*"
 flask-mongoengine = "*"
 mongoengine = "*"
+flask-restful = "*"
 
 [dev-packages]
 
