@@ -9,6 +9,8 @@ wheel = "*"
 flask-mongoengine = "*"
 mongoengine = "*"
 flask-restful = "*"
+flask-bcrypt = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 
